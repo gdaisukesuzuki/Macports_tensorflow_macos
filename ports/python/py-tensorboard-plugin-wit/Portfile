@@ -1,0 +1,57 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-tensorboard_plugin_wit
+version             1.7.0
+revision            0
+platforms           darwin
+supported_archs     noarch
+license             Apache-2
+maintainers         {blair @blair} {jonesc @cjones051073} openmaintainer
+
+description         High-level API that simplifies machine learning.
+long_description    TensorFlow Estimator is a high-level TensorFlow API \
+                    that greatly simplifies machine learning programming. \
+                    Estimators encapsulate training, evaluation, prediction, \
+                    and exporting for your model.
+
+homepage            https://github.com/tensorflow/tensorboard
+
+master_sites        https://files.pythonhosted.org/packages/b6/85/5c5ac0a8c5efdfab916e9c6bc18963f6a6996a8a1e19ec4ad8c9ac9c623c/
+
+distname            tensorboard_plugin_wit-${version}-py3-none-any
+
+checksums           rmd160  90a98f4d51b5ce3190abfc7f0c099bbebed6be9d \
+                    sha256  ee775f04821185c90d9a0e9c56970ee43d7c41403beb6629385b39517129685b \
+                    size    779506
+
+livecheck.url       https://pypi.org/project/tensorflow-plugin-wit/
+livecheck.type      regex
+livecheck.regex     /project/tensorflow-plugin-wit/(\\d+(\\.\\d+)+)/
+
+extract.suffix     .whl
+extract.only
+
+python.versions        37 38
+python.default_version 38
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+        port:py${python.version}-pip
+
+    build {
+    }
+
+    destroot.cmd        pip-${python.branch}
+    destroot.args       \
+        --ignore-installed \
+        --no-cache-dir \
+        --no-dependencies \
+        --root ${destroot} \
+        ${distpath}/${distfiles}
+    destroot.post_args
+
+    livecheck.type  none
+}

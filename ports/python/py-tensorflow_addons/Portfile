@@ -1,0 +1,63 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-tensorflow_addons
+version             0.11
+revision            2
+platforms           darwin
+supported_archs     arm64
+license             Apache-2
+maintainers         {emcrisostomo @emcrisostomo} {jonesc @cjones051073} openmaintainer
+
+description         TensorFlow's Visualization Toolkit
+long_description    TensorBoard is a suite of web applications for inspecting \
+                    and understanding your TensorFlow runs and graphs.
+
+homepage            https://github.com/tensorflow/addons
+
+master_sites        /Users/dai/ports/python/py-tensorflow_addons/files
+
+distname            tensorflow_addons-${version}.${revision}+mlcompute-cp38-cp38-macosx_11_0_arm64
+
+checksums           rmd160  53adbc3f7eb92c498769f5c9fe6f0fa8e4f3a6c5 \
+                    sha256  cde0c663a85609441cb4d624e7255fd8e2b6b1d679645095aac8a234a2812738 \
+                    size    10631832
+
+#livecheck.url       https://pypi.org/project/tensorflow_addons/
+#livecheck.type      regex
+#livecheck.regex     /project/tensorflow_addons/(\\d+(\\.\\d+)+)/
+
+extract.suffix      .whl
+extract.only
+
+python.versions        38
+python.default_version 38
+
+if {${name} ne ${subport}} {
+
+    depends_build-append \
+        port:py${python.version}-pip
+
+    depends_lib-append \
+        port:py${python.version}-tensorflow_macos \
+        port:py${python.version}-protobuf3 \
+        port:py${python.version}-six \
+        port:py${python.version}-werkzeug \
+        port:py${python.version}-wheel
+
+    build {
+    }
+
+    destroot.cmd        pip-${python.branch}
+    destroot.args       \
+        --ignore-installed \
+        --no-cache-dir \
+        --no-dependencies \
+        --root ${destroot} \
+        ${distpath}/${distfiles}
+    destroot.post_args
+
+    livecheck.type      none
+}

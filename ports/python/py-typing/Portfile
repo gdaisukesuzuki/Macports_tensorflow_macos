@@ -1,0 +1,35 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-typing
+version             3.7.4
+revision            3
+
+categories-append   www devel
+platforms           darwin
+supported_archs     noarch
+license             Apache-2
+maintainers         {wholezero.org:macports @mrdomino} openmaintainer
+
+description         simplifies using Google's various server-to-server \
+                    authentication mechanisms
+long_description    ${description}
+
+homepage            https://pypi.python.org/pypi/${python.rootname}
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+distname            ${python.rootname}-${version}.${revision}
+
+checksums           rmd160  a32ba2ef1a88c3885c42410be77a50f45cb3f67d \
+                    sha256  1187fb9c82fd670d10aa07bbb6cfcfe4bdda42d6fab8d5134f04e8c4d0b71cc9 \
+                    size    78592
+
+python.versions     27 35 36 37 38 39
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                    port:py${python.version}-setuptools
+
+    livecheck.type  none
+}

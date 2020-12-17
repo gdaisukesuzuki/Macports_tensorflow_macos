@@ -1,0 +1,35 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-typeguard
+version             2.10.0
+revision            0
+
+categories-append   www devel
+platforms           darwin
+supported_archs     noarch
+license             Apache-2
+maintainers         {wholezero.org:macports @mrdomino} openmaintainer
+
+description         simplifies using Google's various server-to-server \
+                    authentication mechanisms
+long_description    ${description}
+
+homepage            https://pypi.python.org/pypi/${python.rootname}
+master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  1d258df03c52fe6503a97c7c8245ace780c43437 \
+                    sha256  d830132dcd544d3f8a2a842ea739eaa0d7c099fcebb9dcdf3802f4c9929d8191 \
+                    size    35768
+
+python.versions     27 35 36 37 38 39
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                    port:py${python.version}-setuptools
+
+    livecheck.type  none
+}
