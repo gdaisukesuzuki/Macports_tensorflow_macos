@@ -1,0 +1,35 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-gast
+version             0.3.3
+platforms           darwin
+license             BSD
+maintainers         {emcrisostomo @emcrisostomo} openmaintainer
+
+description         Python AST that abstracts the underlying Python version
+long_description    A generic AST to represent Python2 and Python3’s Abstract \
+                    Syntax Tree(AST).  GAST provides a compatibility layer \
+                    between the AST of various Python versions, as produced by \
+                    ast.parse from the standard ast module.
+
+homepage            https://github.com/serge-sans-paille/gast
+master_sites        pypi:g/gast
+distname            gast-${version}
+
+checksums           rmd160  57ea8ba09a30f22973972f4705759c37c8aa6b28 \
+                    sha256  b881ef288a49aa81440d2c5eb8aeefd4c2bb8993d5f50edae7413a85bfdb3b57 \
+                    size    13760
+
+python.versions     27 35 36 37 38
+
+if {${name} ne ${subport}} {
+    depends_build-append \
+                        port:py${python.version}-setuptools
+
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}

@@ -1,0 +1,60 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           python 1.0
+
+name                py-grpcio
+version             1.32.0
+revision            0
+platforms           darwin
+license             Apache-2
+maintainers         {emcrisostomo @emcrisostomo} openmaintainer
+
+description         HTTP/2-based RPC framework
+long_description    ${description}
+
+homepage            https://grpc.io/
+master_sites        pypi:g/grpcio
+distname            ${python.rootname}-${version}
+
+checksums           rmd160  cf6ec81caeda32454f1fbf922b56874e6fc4f08b \
+                    sha256  01d3046fe980be25796d368f8fc5ff34b7cf5e1444f3789a017a7fe794465639 \
+                    size    20809917
+
+
+python.versions     27 35 36 37 38
+
+if {${name} ne ${subport}} {
+    depends_build-append    \
+        port:py${python.version}-cython \
+        port:pkgconfig \
+        port:py${python.version}-setuptools
+
+    depends_lib-append      \
+        port:c-ares \
+        path:lib/libssl.dylib:openssl \
+        port:py${python.version}-protobuf3 \
+        port:py${python.version}-six \
+        port:zlib
+
+    if {${python.version} < 34} {
+        depends_lib-append      \
+            port:py${python.version}-enum34 \
+            port:py${python.version}-futures
+    }
+
+    patch {
+        reinplace "s|/usr|${prefix}|g" ${worksrcpath}/setup.py
+    }
+
+    build.env-append \
+        GRPC_PYTHON_BUILD_SYSTEM_CARES=1 \
+        GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1 \
+        GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1 \
+        GRPC_PYTHON_BUILD_WITH_CYTHON=1
+
+    test.run            yes
+    livecheck.type      none
+} else {
+    livecheck.type      pypi
+}
