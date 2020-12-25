@@ -1,0 +1,173 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem       1.0
+
+name             openjdk
+categories       java devel
+maintainers      {breun.nl:nils @breun} openmaintainer
+platforms        darwin
+license          GPL-2
+supported_archs  arm64
+
+version          15
+
+if {${subport} eq "openjdk"} {
+    # The openjdk port is not installable, but recommends users to install the latest Long Term Support (LTS) subport
+    PortGroup    obsolete 1.0
+    replaced_by  openjdk${version}
+}
+
+# Dummy default values for the obsoleted openjdk port
+set major        ${version}
+set build        0
+set zulu_version 0
+
+set long_description_adoptopenjdk_intro \
+   "OpenJDK build provided by AdoptOpenJDK, built from a fully open-source set of build scripts and infrastructure."
+
+set long_description_adoptopenjdk_hotspot \
+    "${long_description_adoptopenjdk_intro} HotSpot is the VM from the OpenJDK community and the most widely used VM.\
+It is suitable for all workloads."
+
+set long_description_adoptopenjdk_zulu \
+    "${long_description_adoptopenjdk_intro} OpenJ9 is the virtual machine from the Eclipse community. It is an enterprise-grade\
+VM designed for low memory usage and fast start-up and is used in IBM’s JDK. It is suitable for running all workloads."
+
+set long_description_oracle_openjdk \
+    "Production-ready, free and open-source build of the Java Development Kit, an implementation of the Java Standard\
+    Edition (SE) ${major} Platform. OpenJDK is the official reference implementation of Java SE. Included components\
+    are the HotSpot virtual machine, the Java class library and the Java compiler."
+
+subport openjdk8 {
+    version      8.0.275
+    revision     0
+
+    set build    01
+    set major    8
+    set zulu_version 8.50.0.1017
+
+ checksums           sha256  42dd30d4e44bf9ebf160ba2af32184e644a86cc2debf676af863c7dababc91f8 \
+                     size    105770616 \
+                     rmd160  bb1b51d38d692373096d8b1e4b29d71a3370d463
+}
+
+
+
+subport openjdk11 {
+    version      11.0.9.1
+    revision     1
+
+    set build    11
+    set zulu_version 11.43.1015
+    set major    11
+
+ checksums           sha256  89032b50b90a3220b0f5e9c2cba2b5dc8a03c71fe9258d1bf1e219433a8a0bf9 \
+                     size    178947138 \
+                     rmd160  56af84a4cddcaaac2ed3e8188c5f688ea5a4738f
+}
+
+
+
+subport openjdk13 {
+    version      13.0.5.1
+    revision     0
+
+    set build    8
+    set zulu_version 13.35.1017
+    set major    13
+
+ checksums           sha256  ea51d179262b6530a94455dd5529c9987edd233f27aac6f79d03578f5ef300b0 \
+                     size    179419595 \
+                     rmd160  d9937390460895cecf3baf33de9c924842216468
+}
+
+subport openjdk15 {
+    version      15.0.1
+    revision     0
+
+    set build    9
+    set zulu_version 15.28.1013
+    set major    15
+
+checksums           sha256  3ebd1f73cbb297038aa557850800e0d4ece4d45bad8e85542cbf09f31bda9017 \
+                    size    176280602 \
+                    rmd160  75f58f5ba738c6675ad5f2113c45cd4ea8efa3a2
+}
+
+
+
+
+
+# https://trac.macports.org/wiki/PortfileRecipes#compare-osx-darwin-version
+if {${os.platform} eq "darwin" && ${os.major} < 14} {
+    known_fail yes
+    pre-fetch {
+        ui_error "${name} ${version} is only supported on Mac OS X 10.10 Yosemite or later."
+        return -code error
+    }
+}
+
+
+#https://cdn.azul.com/zulu/bin/zulu8.50.0.1017-ca-jdk8.0.275-macos_aarch64.tar.gz
+    description  Open Java Development Kit ${major} (AdoptOpenJDK) with Eclipse OpenJ9 VM
+    long_description ${long_description_adoptopenjdk_zulu}
+
+    master_sites https://cdn.azul.com/zulu/bin/
+    distname     zulu${zulu_version}-ca-jdk${version}-macosx_aarch64
+    worksrcdir   ${distname}/zulu-${major}.jdk
+
+
+
+    homepage     https://azul.com/
+
+livecheck.type  none
+
+variant Applets \
+    description { Advertise the JVM capability "Applets".} {}
+
+variant BundledApp \
+    description { Advertise the JVM capability "BundledApp". This is required by some java-based app bundles to recognize and use the JVM.} {}
+
+variant JNI \
+    description { Advertise the JVM capability "JNI". This is required by some java-based app bundles to recognize and use the JVM.} {}
+
+variant WebStart \
+    description { Advertise the JVM capability "WebStart".} {}
+
+patch {
+    foreach var { Applets BundledApp JNI WebStart } {
+        if {[variant_isset ${var}]} {
+            reinplace -E "s|^(\[\[:space:\]\]*<string>)CommandLine(</string>)|\\1${var}\\2\\\n\\1CommandLine\\2|" ${worksrcpath}/Contents/Info.plist
+        }
+    }
+}
+
+use_configure    no
+
+build {}
+
+# macOS Java tools expect to find Java virtual machines under /Library/Java/JavaVirtualMachines, which is not under ${prefix}.
+destroot.violate_mtree yes
+
+set target /Library/Java/JavaVirtualMachines/${subport}
+set destroot_target ${destroot}${target}
+
+destroot {
+    xinstall -m 755 -d ${destroot_target}
+    copy ${worksrcpath}/Contents ${destroot_target}
+}
+
+notes "
+If you have more than one JDK installed you can make ${subport} the default
+by adding the following line to your shell profile:
+
+    export JAVA_HOME=${target}/Contents/Home
+"
+
+if {[string match openjdk12* ${subport}] || [string match openjdk13* ${subport}] || [string match openjdk14* ${subport}]} {
+    notes-append "
+    Warning: Support for OpenJDK ${major} has reached end of life and there will be no more updates.
+             Please consider migrating to a supported OpenJDK version.
+             Currently OpenJDK 8, 11 and 15 are supported.
+    "
+}
