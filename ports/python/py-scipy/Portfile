@@ -6,16 +6,15 @@ PortGroup               active_variants 1.1
 PortGroup               github 1.0
 PortGroup               compilers 1.0
 
-github.setup            scipy scipy 1.5.4 v
-checksums               rmd160  9668f24955efe3e955a462459369162895fff936 \
-                        sha256  91366228947f17c97c422fafac4e5e6cc217e3732716ed2e75757d822c427829 \
-                        size    19838989
+github.setup            scipy scipy 1.6.0rc1 v
+checksums           rmd160  1d30bb7bc5a8b14e9b189f2a9e733a7329254563 \
+                    sha256  dd4d86028fc4088c61d90e6bb443ebb8babb57a4509a00b733033a387ada0a08 \
+                    size    21917117
 revision                0
 
 name                    py-scipy
 platforms               darwin
 license                 BSD
-supported_archs  arm64
 maintainers             {michaelld @michaelld} openmaintainer
 description             An opensource library of scientific tools for Python
 long_description        ${description}
@@ -89,7 +88,6 @@ if {${name} ne ${subport}} {
 
     pre-configure {
         set fc_options      "config_fc --fcompiler gnu95 --f77exec ${configure.f77} --f77flags='${configure.fflags}' --f90exec ${configure.f90} --f90flags='${configure.fflags}'"
-        # set fc_options      "config_fc --fcompiler gnu95 --f77exec ${configure.f77} --f77flags='${configure.f77_archflags} ${configure.fflags}' --f90exec ${configure.f90} --f90flags='${configure.f90_archflags} ${configure.fflags}'"
         set config_options  "config --cc ${configure.cc} --include-dirs ${prefix}/include --library-dirs ${prefix}/lib"
         build.cmd-append    ${fc_options} ${config_options}
         destroot.cmd-append ${fc_options} ${config_options}
