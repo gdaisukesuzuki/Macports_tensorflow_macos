@@ -6,10 +6,10 @@ PortGroup               active_variants 1.1
 PortGroup               github 1.0
 PortGroup               compilers 1.0
 
-github.setup            scipy scipy 1.6.0rc1 v
-checksums           rmd160  1d30bb7bc5a8b14e9b189f2a9e733a7329254563 \
-                    sha256  dd4d86028fc4088c61d90e6bb443ebb8babb57a4509a00b733033a387ada0a08 \
-                    size    21917117
+github.setup            scipy scipy 1.6.0rc2 v
+checksums           rmd160  d124f8b2a13d0dd9129cb95dc2fb3d93d754dbf1 \
+                    sha256  fd8ef19e0c786289d493b9ff6a6181fab4b291a8c780d486670ef554aa9be3ca \
+                    size    21921465
 revision                0
 
 name                    py-scipy
