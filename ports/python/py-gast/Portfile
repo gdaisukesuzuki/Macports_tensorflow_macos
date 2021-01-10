@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           python 1.0
 
 name                py-gast
-version             0.3.3
+version             0.4.0
 platforms           darwin
 license             BSD
 maintainers         {emcrisostomo @emcrisostomo} openmaintainer
@@ -19,9 +19,9 @@ homepage            https://github.com/serge-sans-paille/gast
 master_sites        pypi:g/gast
 distname            gast-${version}
 
-checksums           rmd160  57ea8ba09a30f22973972f4705759c37c8aa6b28 \
-                    sha256  b881ef288a49aa81440d2c5eb8aeefd4c2bb8993d5f50edae7413a85bfdb3b57 \
-                    size    13760
+checksums           rmd160  2f953846e11ce313959a31b47816d56b7328faea \
+                    sha256  40feb7b8b8434785585ab224d1568b857edb18297e5a3047f1ba012bc83b42c1 \
+                    size    13804
 
 python.versions     27 35 36 37 38
 
