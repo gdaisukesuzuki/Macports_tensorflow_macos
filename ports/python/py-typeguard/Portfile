@@ -13,12 +13,12 @@ supported_archs     noarch
 license             Apache-2
 maintainers         {wholezero.org:macports @mrdomino} openmaintainer
 
-description         simplifies using Google's various server-to-server \
-                    authentication mechanisms
+description         provides run-time type checking for functions defined with \
+      i             PEP 484 argument (and return) type annotations
 long_description    ${description}
 
-homepage            https://pypi.python.org/pypi/${python.rootname}
-master_sites        pypi:[string index ${python.rootname} 0]/${python.rootname}
+homepage            https://github.com/agronholm/typeguard
+master_sites        pypi:t:typeguard
 distname            ${python.rootname}-${version}
 
 checksums           rmd160  1d258df03c52fe6503a97c7c8245ace780c43437 \
