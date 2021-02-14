@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           python 1.0
 
 name                py-tensorflow_macos
-version             0.1a1
+version             0.1a2
 revision            0
 platforms           darwin
 supported_archs     arm64
@@ -17,13 +17,13 @@ long_description    TensorBoard is a suite of web applications for inspecting \
 
 homepage            https://github.com/apple/tensorflow_macos
 
-master_sites        /Users/XXX/ports/python/py-tensorflow_macos/files
+master_sites        /Users/dai/ports/python/py-tensorflow_macos/files
 
 distname            tensorflow_macos-${version}-cp38-cp38-macosx_11_0_arm64
 
-checksums           rmd160  53adbc3f7eb92c498769f5c9fe6f0fa8e4f3a6c5 \
-                    sha256  cde0c663a85609441cb4d624e7255fd8e2b6b1d679645095aac8a234a2812738 \
-                    size    10631832
+checksums           rmd160  adc1bec44751c57d044c6991649348e35d33a970 \
+                    sha256  486037e92f4d5804967ac96e44cf4d13cf80d2fb84907731ad91e24f07cc486c \
+                    size    124171392
 
 #livecheck.url       https://pypi.org/project/tensorflow_macos/
 #livecheck.type      regex
