@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           python 1.0
 
 name                py-tensorboard_plugin_wit
-version             1.7.0
+version             1.8.0
 revision            0
 platforms           darwin
 supported_archs     noarch
@@ -19,13 +19,13 @@ long_description    TensorFlow Estimator is a high-level TensorFlow API \
 
 homepage            https://github.com/tensorflow/tensorboard
 
-master_sites        https://files.pythonhosted.org/packages/b6/85/5c5ac0a8c5efdfab916e9c6bc18963f6a6996a8a1e19ec4ad8c9ac9c623c/
+master_sites        https://files.pythonhosted.org/packages/1a/c1/499e600ba0c618b451cd9c425ae1c177249940a2086316552fee7d86c954/
 
 distname            tensorboard_plugin_wit-${version}-py3-none-any
 
-checksums           rmd160  90a98f4d51b5ce3190abfc7f0c099bbebed6be9d \
-                    sha256  ee775f04821185c90d9a0e9c56970ee43d7c41403beb6629385b39517129685b \
-                    size    779506
+checksums           rmd160  090b2790282a3dbf5729d4774414a96b7e5ff2d3 \
+                    sha256  2a80d1c551d741e99b2f197bb915d8a133e24adb8da1732b840041860f91183a \
+                    size    781157
 
 livecheck.url       https://pypi.org/project/tensorflow-plugin-wit/
 livecheck.type      regex
