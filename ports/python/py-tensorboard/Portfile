@@ -3,11 +3,11 @@
 PortSystem          1.0
 PortGroup           python 1.0
 
-name                py-tensorflow_macos
-version             0.1a2
+name                py-tensorboard
+version             2.4.1
 revision            0
 platforms           darwin
-supported_archs     arm64
+supported_archs     noarch
 license             Apache-2
 maintainers         {emcrisostomo @emcrisostomo} {jonesc @cjones051073} openmaintainer
 
@@ -15,60 +15,33 @@ description         TensorFlow's Visualization Toolkit
 long_description    TensorBoard is a suite of web applications for inspecting \
                     and understanding your TensorFlow runs and graphs.
 
-homepage            https://github.com/apple/tensorflow_macos
+homepage            https://github.com/tensorflow/tensorboard
 
-master_sites        /Users/dai/ports/python/py-tensorflow_macos/files
+master_sites        https://files.pythonhosted.org/packages/64/21/eebd23060763fedeefb78bc2b286e00fa1d8abda6f70efa2ee08c28af0d4/
 
-distname            tensorflow_macos-${version}-cp38-cp38-macosx_11_0_arm64
+distname            tensorboard-${version}-py3-none-any
 
-checksums           rmd160  adc1bec44751c57d044c6991649348e35d33a970 \
-                    sha256  486037e92f4d5804967ac96e44cf4d13cf80d2fb84907731ad91e24f07cc486c \
-                    size    124171392
+checksums           rmd160  0e9abde4901d779a720afbc9803300ab62c85046 \
+                    sha256  7b8c53c396069b618f6f276ec94fc45d17e3282d668979216e5d30be472115e4 \
+                    size    10636001
 
-#livecheck.url       https://pypi.org/project/tensorflow_macos/
-#livecheck.type      regex
-#livecheck.regex     /project/tensorflow_macos/(\\d+(\\.\\d+)+)/
+livecheck.url       https://pypi.org/project/tensorboard/
+livecheck.type      regex
+livecheck.regex     /project/tensorboard/(\\d+(\\.\\d+)+)/
 
 extract.suffix      .whl
 extract.only
 
-python.versions        38
+python.versions        37 38
 python.default_version 38
 
 if {${name} ne ${subport}} {
+    conflicts   py${python.version}-tensorboard1
 
     depends_build-append \
         port:py${python.version}-pip
 
     depends_lib-append \
-        port:py${python.version}-gast \
-        port:py${python.version}-astunparse \
-        port:py${python.version}-flatbuffers \
-        port:py${python.version}-google-pasta \
-        port:py${python.version}-h5py \
-        port:py${python.version}-keras_preprocessing \
-        port:py${python.version}-keras_applications \
-        port:py${python.version}-keras \
-        port:py${python.version}-opt_einsum \
-        port:py${python.version}-tensorboard_plugin_wit \
-        port:py${python.version}-cachetools \
-        port:py${python.version}-google-auth-oauthlib \
-        port:py${python.version}-asn1 \
-        port:py${python.version}-asn1-modules \
-        port:py${python.version}-requests \
-        port:py${python.version}-requests-oauthlib \
-        port:py${python.version}-certifi \
-        port:py${python.version}-chardet \
-        port:py${python.version}-idna \
-        port:py${python.version}-oauthlib \
-        port:py${python.version}-termcolor \
-        port:py${python.version}-typeguard \
-        port:py${python.version}-typing \
-        port:py${python.version}-urllib3 \
-        port:py${python.version}-typing_extensions \
-        port:py${python.version}-wrapt \
-        port:py${python.version}-rsa \
-        port:py${python.version}-tensorflow_estimator \
         port:py${python.version}-absl \
         port:py${python.version}-grpcio \
         port:py${python.version}-markdown \
