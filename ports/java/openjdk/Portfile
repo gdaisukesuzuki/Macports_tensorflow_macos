@@ -82,16 +82,17 @@ subport openjdk13 {
 }
 
 subport openjdk15 {
-    version      15.0.1
+    version      15.0.2
     revision     0
 
-    set build    9
-    set zulu_version 15.28.1013
+    set build    7
+    set zulu_version 15.29.15
     set major    15
 
-checksums           sha256  3ebd1f73cbb297038aa557850800e0d4ece4d45bad8e85542cbf09f31bda9017 \
-                    size    176280602 \
-                    rmd160  75f58f5ba738c6675ad5f2113c45cd4ea8efa3a2
+checksums           sha256  2613c3f15eef6b6ecd0fd102da92282b985e4573905dc902f1783d8059c1efc5 \
+                    size    176270695 \
+                    rmd160  5501199e06e033371d9d2aca7bab605be28e0495    
+
 }
 
 
